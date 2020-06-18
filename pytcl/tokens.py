@@ -1,14 +1,16 @@
 import re
 
 class Token():
-    EOF = 0
-    WHITESPACE = 1
-    NAME = 2
-    INT = 3
-    STRING = 4
-    FLOAT = 5
+    UNKNOWN = 0
+    EOF = 1
+    WHITESPACE = 2
+    NAME = 3
+    INT = 4
+    STRING = 5
+    FLOAT = 6
 
     token_names = [
+        'Unknown',
         'EOF',
         'Whitespace',
         'Name',
@@ -17,7 +19,7 @@ class Token():
         'Float',
     ]
 
-    type = None
+    type = 0
     value = ""
 
     def __init__(self, type: int, value = ""):

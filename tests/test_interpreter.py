@@ -1,6 +1,7 @@
 import unittest
 
-from pytcl.interp import Interpreter, IncorrectNumberOfArgumentsError
+from pytcl.interp import Interpreter
+from pytcl.library import IncorrectNumberOfArgumentsError
 
 
 class TestInterp(unittest.TestCase):
@@ -52,22 +53,6 @@ class TestInterp(unittest.TestCase):
 
         self.assertTrue("Cannot set a variable to type <class 'pytcl.interp.Interpreter'>" in str(context.exception))
 
-    def test_simple_set_script_incorrect_args(self):
-        interp = Interpreter()
-
-        with self.assertRaises(IncorrectNumberOfArgumentsError) as context:
-            interp.eval('set x')
-
-        self.assertTrue("set requires 2 arguments, 1 given." in str(context.exception))
-
-    def test_simple_set_script_incorrect_args_excess(self):
-        interp = Interpreter()
-
-        with self.assertRaises(IncorrectNumberOfArgumentsError) as context:
-            interp.eval('set x 5 4')
-
-        self.assertTrue("set requires 2 arguments, 3 given." in str(context.exception))
-
     def test_malformed_script_1(self):
         interp = Interpreter()
 
@@ -82,3 +67,10 @@ class TestInterp(unittest.TestCase):
             interp.eval('set x "cat"se')
 
         self.assertTrue("Expecting space but got 'se'" in str(context.exception))
+
+    def test_malformed_script_3(self):
+        interp = Interpreter()
+
+        with self.assertRaises(Exception) as context:
+            interp.eval('2')
+        self.assertTrue('invalid command name "2"' in str(context.exception))

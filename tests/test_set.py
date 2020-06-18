@@ -1,6 +1,7 @@
 import unittest
 
-from pytcl.interp import Interpreter, IncorrectNumberOfArgumentsError
+from pytcl.interp import Interpreter
+from pytcl.library import IncorrectNumberOfArgumentsError, VariableDoesNotExistError
 
 
 class TestSetCommand(unittest.TestCase):
@@ -23,9 +24,9 @@ class TestSetCommand(unittest.TestCase):
         interp = Interpreter()
 
         with self.assertRaises(IncorrectNumberOfArgumentsError) as context:
-            interp.eval('set x')
+            interp.eval('set')
 
-        self.assertTrue("set requires 2 arguments, 1 given." in str(context.exception))
+        self.assertTrue("set: Expected 1 or 2 arguments but received 0" in str(context.exception))
 
     def test_simple_set_script_incorrect_args_excess(self):
         interp = Interpreter()
@@ -33,7 +34,7 @@ class TestSetCommand(unittest.TestCase):
         with self.assertRaises(IncorrectNumberOfArgumentsError) as context:
             interp.eval('set x 5 4')
 
-        self.assertTrue("set requires 2 arguments, 3 given." in str(context.exception))
+        self.assertTrue("set: Expected 1 or 2 arguments but received 3" in str(context.exception))
 
     def test_simple_set_script_string(self):
         interp = Interpreter()
@@ -85,3 +86,20 @@ class TestSetCommand(unittest.TestCase):
         interp.eval('set x 12.34e-14')
 
         self.assertEqual(interp.get('x'), 1.234e-13)
+
+    def test_simple_set_read(self):
+        interp = Interpreter()
+
+        interp.eval('set x "5"')
+        result = interp.eval('set x')
+
+        self.assertEqual(result.value, '5')
+        self.assertEqual(interp.get('x'), '5')
+
+    def test_simple_set_read_not_exist(self):
+        interp = Interpreter()
+
+        with self.assertRaises(VariableDoesNotExistError) as context:
+            interp.eval('set x')
+
+        self.assertTrue('set: Variable "x" does not exist.' in str(context.exception))
