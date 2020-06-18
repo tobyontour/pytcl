@@ -19,7 +19,7 @@ class Interpreter():
         elif type(value) is str:
             self.variables[variable_name] = Token(Token.STRING, value)
         else:
-            raise Exception("Cannot set a variable to type " + type(value))
+            raise Exception("Cannot set a variable to type " + str(type(value)))
 
     def get(self, variable_name):
         try:

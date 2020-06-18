@@ -4,6 +4,14 @@ from pytcl.interp import Interpreter, IncorrectNumberOfArgumentsError
 
 
 class TestSetCommand(unittest.TestCase):
+    def test_invalid_name(self):
+        interp = Interpreter()
+
+        with self.assertRaises(Exception) as context:
+            interp.eval('set 3 5')
+
+        self.assertTrue('Invalid variable name "3"' in str(context.exception))
+
     def test_simple_set_script_integer(self):
         interp = Interpreter()
 
@@ -41,6 +49,21 @@ class TestSetCommand(unittest.TestCase):
 
         self.assertEqual(interp.get('x'), 'This is a string')
 
+    def test_simple_set_script_string_single_quote(self):
+        interp = Interpreter()
+
+        interp.eval('set x \'5\'')
+
+        self.assertEqual(interp.get('x'), '5')
+
+    def test_string_set_single_quote(self):
+        interp = Interpreter()
+
+        interp.eval('set x \'This is a string\'')
+
+        self.assertEqual(interp.get('x'), 'This is a string')
+
+
     def test_string_starting_with_number_set(self):
         """ Not keen on this aspect of Tcl """
         interp = Interpreter()
@@ -62,6 +85,3 @@ class TestSetCommand(unittest.TestCase):
         interp.eval('set x 12.34e-14')
 
         self.assertEqual(interp.get('x'), 1.234e-13)
-
-if __name__ == '__main__':
-    unittest.main()

@@ -8,6 +8,9 @@ coverage: venv
 	venv/bin/coverage report -m
 	venv/bin/coverage html
 
+chrome:
+	google-chrome htmlcov/index.html
+
 venv:
 	virtualenv --python=python3 venv
 	venv/bin/pip install -r requirements.txt

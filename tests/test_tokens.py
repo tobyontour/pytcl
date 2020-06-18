@@ -46,28 +46,12 @@ class TestTokenizer(unittest.TestCase):
         self.assertEqual(token.value, 123)
         self.assertIsNone(tokenizer.c)
 
-    # def test_simple_character(self):
-    #     tokenizer = Tokenizer('x')
+    def test_eof(self):
+        tokenizer = Tokenizer('123')
 
-    #     token = tokenizer.get_next_token()
+        token = tokenizer.consume_number()
 
-    #     self.assertEqual(token.type, Tokenizer.NAME)
-    #     self.assertEqual(token.value, 'x')
-
-    # def test_simple_string(self):
-
-    #     interp = Interpreter()
-
-    #     self.assertEqual(interp.tokenise('"This is a string"'), ['This is a string'])
-
-    # def test_simple_string_set(self):
-
-    #     interp = Interpreter()
-
-    #     self.assertEqual(interp.tokenise('set x "This is a string"'), ['set', 'x', 'This is a string'])
-
-    # def test_simple_number_set(self):
-
-    #     interp = Interpreter()
-
-    #     self.assertEqual(interp.tokenise('set x 5'), ['set', 'x', '5'])
+        token = tokenizer.get_next_token()
+        self.assertEqual(token.type, Token.EOF)
+        self.assertEqual(token.value, '')
+        self.assertIsNone(tokenizer.c)

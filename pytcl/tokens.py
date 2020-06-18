@@ -24,9 +24,9 @@ class Token():
         self.type = type
         self.value = value
 
-    def __str__(self):
-        token_name = Token.token_names[self.type]
-        return f"<'{self.value}', {token_name}>"
+    # def __str__(self):
+    #     token_name = Token.token_names[self.type]
+    #     return f"<'{self.value}', {token_name}>"
 
 class Tokenizer():
 
@@ -48,11 +48,11 @@ class Tokenizer():
         else:
             self.c = self.script[self.ptr]
 
-    def match(self, x: str):
-        if (self.c == x):
-            self.consume()
-        else:
-            raise Exception(f"Expected '{x}' but got '{self.c}'")
+    # def match(self, x: str):
+    #     if (self.c == x):
+    #         self.consume()
+    #     else:
+    #         raise Exception(f"Expected '{x}' but got '{self.c}'")
 
     def is_whitespace(self, c):
         return c in [' ', '\t', '\r', '\n']
@@ -125,4 +125,4 @@ class Tokenizer():
             else:
                 raise Exception(f"Unexpected character '{self.c}'")
 
-        return Token(Token.EOF, None)
+        return Token(Token.EOF)
