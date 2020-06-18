@@ -34,12 +34,12 @@ class TestSetCommand(unittest.TestCase):
 
         self.assertEqual(interp.get('x'), '5')
 
-    # def test_string_set(self):
-    #     interp = Interpreter()
+    def test_string_set(self):
+        interp = Interpreter()
 
-    #     interp.eval('set x "This is a string"')
+        interp.eval('set x "This is a string"')
 
-    #     self.assertEqual(interp.get('x'), 'This is a string')
+        self.assertEqual(interp.get('x'), 'This is a string')
 
 if __name__ == '__main__':
     unittest.main()
