@@ -60,6 +60,8 @@ class Tokenizer():
         escaped = False
         closed = False
         value = ""
+        if self.c == delimiter:
+            self.consume()
         while self.c is not None:
             if self.c == '\\' and not escaped:
                 escaped = True
@@ -90,9 +92,7 @@ class Tokenizer():
         return Token(Token.NAME, value)
 
     def get_next_token(self) -> Token:
-        print(f">{self.c}<")
         while self.c is not None:
-            # print(f"== {state} {char} -> ", end=' ')
             if self.c == ' ':
                 return self.whitespace()
             elif self.c == '"':
@@ -105,6 +105,5 @@ class Tokenizer():
                 return self.consume_name()
             else:
                 raise Exception(f"Unexpected character '{self.c}'")
-            # print(f"{state}   ({token})")
 
         return Token(Token.EOF, None)

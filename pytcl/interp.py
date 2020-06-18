@@ -34,7 +34,6 @@ class Interpreter():
                 self.call(tokens.pop(0).value, tokens)
 
     def call(self, command, args: Tokens):
-        print(args)
         if command == 'set':
             if len(args) == 2:
                 if args[0].type != Token.NAME:
@@ -58,9 +57,6 @@ class Interpreter():
             elif token.type != Token.WHITESPACE:
                 token_list.append(token)
                 expecting_space = True
-
-                print(str(token))
-
 
         return token_list
 
