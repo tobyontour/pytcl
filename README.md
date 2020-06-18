@@ -1,6 +1,8 @@
 # pytcl
 Minimal Tcl DSL interpreter in Python
 
+![Python package](https://github.com/tobyontour/pytcl/workflows/Python%20package/badge.svg)
+
 ## Next steps
 
 * Variable expansion.
