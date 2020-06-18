@@ -1,3 +1,4 @@
+import re
 
 class Token():
     EOF = 0
@@ -5,6 +6,7 @@ class Token():
     NAME = 2
     INT = 3
     STRING = 4
+    FLOAT = 5
 
     token_names = [
         'EOF',
@@ -12,6 +14,7 @@ class Token():
         'Name',
         'Integer',
         'String',
+        'Float',
     ]
 
     type = None
@@ -22,8 +25,8 @@ class Token():
         self.value = value
 
     def __str__(self):
-        tname = Token.token_names[self.type]
-        return f"<'{self.value}', {tname}>"
+        token_name = Token.token_names[self.type]
+        return f"<'{self.value}', {token_name}>"
 
 class Tokenizer():
 
@@ -51,15 +54,18 @@ class Tokenizer():
         else:
             raise Exception(f"Expected '{x}' but got '{self.c}'")
 
+    def is_whitespace(self, c):
+        return c in [' ', '\t', '\r', '\n']
+
     def whitespace(self) -> Token:
         while self.c in [" "]:
             self.consume()
         return Token(Token.WHITESPACE)
 
-    def consume_string(self, delimiter = '"') -> Token:
+    def consume_string(self, delimiter = '"', prefix = '') -> Token:
         escaped = False
         closed = False
-        value = ""
+        value = prefix
         if self.c == delimiter:
             self.consume()
         while self.c is not None:
@@ -73,16 +79,29 @@ class Tokenizer():
                 escaped = False
                 value += self.c
             self.consume()
-        if not closed:
+        if not closed and not self.is_whitespace(delimiter):
             raise Exception(f"Expected '{delimiter}' not end of line")
         return Token(Token.STRING, value)
 
     def consume_number(self) -> Token:
         value = ""
-        while self.c is not None and self.c.isdigit():
-            value += self.c
-            self.consume()
-        return Token(Token.INT, int(value))
+        allowed_characters = ['+', '-', 'e', '.']
+        while self.c is not None:
+            if self.c.isdigit() or self.c in allowed_characters:
+                value += self.c
+                self.consume()
+            else:
+                break
+
+        integer_p = re.compile(r'^[\+\-]?[0-9]+$')
+        if integer_p.match(value):
+            return Token(Token.INT, int(value))
+
+        float_p = re.compile(r'^[\+\-]?[0-9]+(\.[0-9]+)(e[\+\-][0-9]+)?$')
+        if float_p.match(value):
+            return Token(Token.FLOAT, float(value))
+
+        return self.consume_string(' ', value)
 
     def consume_name(self) -> Token:
         value = ""

@@ -2,3 +2,12 @@
 
 test:
 	python3 -m unittest discover -s tests
+
+coverage: venv
+	venv/bin/coverage run -m unittest discover
+	venv/bin/coverage report -m
+	venv/bin/coverage html
+
+venv:
+	virtualenv --python=python3 venv
+	venv/bin/pip install -r requirements.txt

@@ -41,5 +41,27 @@ class TestSetCommand(unittest.TestCase):
 
         self.assertEqual(interp.get('x'), 'This is a string')
 
+    def test_string_starting_with_number_set(self):
+        """ Not keen on this aspect of Tcl """
+        interp = Interpreter()
+
+        interp.eval('set x 123.4234excel')
+
+        self.assertEqual(interp.get('x'), '123.4234excel')
+
+    def test_float_set(self):
+        interp = Interpreter()
+
+        interp.eval('set x 12.34')
+
+        self.assertEqual(interp.get('x'), 12.34)
+
+    def test_float_with_exponent_set(self):
+        interp = Interpreter()
+
+        interp.eval('set x 12.34e-14')
+
+        self.assertEqual(interp.get('x'), 1.234e-13)
+
 if __name__ == '__main__':
     unittest.main()
