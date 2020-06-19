@@ -14,6 +14,15 @@ class CommandNotFoundError(CommandError):
 
 class CommandFactory():
 
+    commands = {}
+
+    def add(self, command_name: str, command_class):
+        assert issubclass(command_class, Command), ""
+        self.commands[command_name] = command_class
+
+    def add_multiple(self, commands: dict):
+        self.commands.update(commands)
+
     def get(self, command_name: str, variables: dict):
         if command_name == 'set':
             return SetCommand(variables)
