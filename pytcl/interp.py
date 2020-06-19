@@ -1,15 +1,15 @@
 
 from typing import List
 from .tokens import Tokenizer, Token
-from .library import SetCommand
+from .library import SetCommand, Command, CommandFactory
 
 Tokens = List[Token]
 
 class Interpreter():
     """Main interpreter"""
-
     def __init__(self):
         self.variables = {}
+        self.commands = CommandFactory()
 
     def set(self, variable_name, value):
         if type(value) is int:
@@ -33,10 +33,9 @@ class Interpreter():
             else:
                 raise Exception(f'invalid command name "{tokens[0].value}"')
 
-    def call(self, command, args: Tokens):
-        if command == 'set':
-            cmd = SetCommand(self.variables)
-            return cmd.call(args)
+    def call(self, command: str, args: Tokens):
+        cmd = self.commands.get(command, self.variables)
+        return cmd.call(args)
 
     def tokenise(self, script) -> Tokens:
         tokenizer = Tokenizer(script)

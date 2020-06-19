@@ -1,10 +1,15 @@
 import unittest
 
 from pytcl.interp import Interpreter
-from pytcl.library import IncorrectNumberOfArgumentsError, VariableDoesNotExistError
+from pytcl.library import IncorrectNumberOfArgumentsError, VariableDoesNotExistError, SetCommand
 
 
 class TestSetCommand(unittest.TestCase):
+    def test_metadata(self):
+        cmd = SetCommand({})
+        self.assertEqual(cmd.help(), "set: Read and write variables.")
+        self.assertEqual(str(cmd), "<Command, set>")
+
     def test_invalid_name(self):
         interp = Interpreter()
 

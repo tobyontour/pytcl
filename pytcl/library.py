@@ -9,19 +9,30 @@ class IncorrectNumberOfArgumentsError(CommandError):
 class VariableDoesNotExistError(CommandError):
     pass
 
+class CommandNotFoundError(CommandError):
+    pass
+
+class CommandFactory():
+
+    def get(self, command_name: str, variables: dict):
+        if command_name == 'set':
+            return SetCommand(variables)
+        elif command_name == 'error':
+            return ErrorCommand(variables)
+        else:
+            raise CommandNotFoundError(f'Command "{command_name}" not found.')
+
 class Command():
-    name = 'nop'
+    name = ''
 
     def __init__(self, variables: dict):
         self.variables = variables
 
-    def call(args: [Token]) -> bool:
-        if len(args) != 0:
-            raise IncorrectNumberOfArgumentsError("Expected 0 arguments.")
-        return True
+    def call(self, args: [Token]) -> bool: # pragma: no cover
+        pass
 
-    def help(self):
-        return "Null command."
+    def help(self): # pragma: no cover
+        return "Base command."
 
     def __str__(self):
         return f'<Command, {self.name}>'
@@ -36,6 +47,16 @@ class Command():
         if len(args) not in expected:
             temp = ' or '.join(str(i) for i in expected)
             raise IncorrectNumberOfArgumentsError(f"{self.name}: Expected {temp} arguments but received {actual}.")
+
+class ErrorCommand(Command):
+    name = 'error'
+
+    def call(self, args: [Token]) -> bool:
+        self.assertNumberOfArguments(1, args)
+        raise CommandError(args[0].value)
+
+    def help(self):
+        return "error: Returns an error."
 
 class SetCommand(Command):
     name = 'set'
@@ -53,5 +74,5 @@ class SetCommand(Command):
         return args[1]
 
     def help(self):
-        return "set - Read and write variables"
+        return "set: Read and write variables."
 

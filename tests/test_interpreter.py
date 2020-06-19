@@ -1,7 +1,7 @@
 import unittest
 
 from pytcl.interp import Interpreter
-from pytcl.library import IncorrectNumberOfArgumentsError
+from pytcl.library import IncorrectNumberOfArgumentsError, CommandNotFoundError
 
 
 class TestInterp(unittest.TestCase):
@@ -74,3 +74,10 @@ class TestInterp(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             interp.eval('2')
         self.assertTrue('invalid command name "2"' in str(context.exception))
+
+    def test_missing_command(self):
+        interp = Interpreter()
+
+        with self.assertRaises(Exception) as context:
+            interp.eval('qwerty')
+        self.assertTrue("Command \"qwerty\" not found." in str(context.exception))
