@@ -1,7 +1,7 @@
 
 from typing import List
 from .tokens import Tokenizer, Token
-from .library import SetCommand, Command, CommandFactory
+from .library import CommandFactory
 
 Tokens = List[Token]
 

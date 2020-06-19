@@ -1,7 +1,8 @@
 import unittest
 
 from pytcl.interp import Interpreter
-from pytcl.library import IncorrectNumberOfArgumentsError, VariableDoesNotExistError, SetCommand
+from pytcl.command import IncorrectNumberOfArgumentsError, VariableDoesNotExistError
+from pytcl.stdlib import SetCommand
 
 
 class TestSetCommand(unittest.TestCase):

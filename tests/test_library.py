@@ -1,6 +1,7 @@
 import unittest
 
-from pytcl.library import CommandFactory, SetCommand, ErrorCommand
+from pytcl.library import CommandFactory
+from pytcl.stdlib import SetCommand, ErrorCommand
 
 class TestCommandFactory(unittest.TestCase):
     def test_add_command(self):

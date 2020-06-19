@@ -1,7 +1,7 @@
 import unittest
 
 from pytcl.interp import Interpreter
-from pytcl.library import IncorrectNumberOfArgumentsError, CommandNotFoundError
+from pytcl.command import IncorrectNumberOfArgumentsError, CommandNotFoundError
 
 
 class TestInterp(unittest.TestCase):

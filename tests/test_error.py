@@ -1,7 +1,8 @@
 import unittest
 
 from pytcl.interp import Interpreter
-from pytcl.library import IncorrectNumberOfArgumentsError, CommandError, ErrorCommand
+from pytcl.command import IncorrectNumberOfArgumentsError, CommandError
+from pytcl.stdlib import ErrorCommand
 
 
 class TestErrorCommand(unittest.TestCase):
