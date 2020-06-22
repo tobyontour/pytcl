@@ -7,7 +7,7 @@ Minimal Tcl DSL interpreter in Python
 
 * Variable expansion.
 * Recursive expressions.
-* eval
+* expr
 * lists
 * arrays
 * conditionals (and thus expr)
@@ -20,7 +20,7 @@ Minimal Tcl DSL interpreter in Python
 * Save tokenised script to file.
 * Count cost of calls and optionally limit.
 * Track and optionally limit memory used.
-* Virtual file system.
+* Virtual file system including stdio.
 * Exceptions with script line number and position.
 
 ## Libraries

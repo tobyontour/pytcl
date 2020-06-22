@@ -1,4 +1,5 @@
 import re
+from typing import List
 
 class Token():
     UNKNOWN = 0
@@ -29,6 +30,9 @@ class Token():
     # def __str__(self):
     #     token_name = Token.token_names[self.type]
     #     return f"<'{self.value}', {token_name}>"
+
+
+Tokens = List[Token]
 
 class Tokenizer():
 

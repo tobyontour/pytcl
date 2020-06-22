@@ -1,9 +1,7 @@
 
-from typing import List
-from .tokens import Tokenizer, Token
+from .tokens import Tokenizer, Token, Tokens
 from .library import CommandFactory
 
-Tokens = List[Token]
 
 class Interpreter():
     """Main interpreter"""
