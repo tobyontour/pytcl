@@ -31,7 +31,6 @@ class Token():
     #     token_name = Token.token_names[self.type]
     #     return f"<'{self.value}', {token_name}>"
 
-
 Tokens = List[Token]
 
 class Tokenizer():

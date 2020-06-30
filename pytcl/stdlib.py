@@ -5,11 +5,14 @@ class ErrorCommand(Command):
     name = 'error'
 
     def call(self, args: [Token]) -> bool:
-        self.assertNumberOfArguments(1, args)
+        self.assertNumberOfArgumentsMultiple([1, 2, 3], args)
         raise CommandError(args[0].value)
 
     def help(self):
         return "error: Returns an error."
+
+    def syntax(self):
+        return f'{self.name} message ?info? ?code?'
 
 class SetCommand(Command):
     name = 'set'
@@ -28,6 +31,9 @@ class SetCommand(Command):
 
     def help(self):
         return "set: Read and write variables."
+
+    def syntax(self):
+        return f'{self.name} varName ?value?'
 
 commands = {
     'set': SetCommand,

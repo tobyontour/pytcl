@@ -23,6 +23,6 @@ class TestErrorCommand(unittest.TestCase):
         interp = Interpreter()
 
         with self.assertRaises(IncorrectNumberOfArgumentsError) as context:
-            interp.eval('error "Hello world." 34')
-
-        self.assertTrue('error: Expected 1 arguments but received 2.' in str(context.exception))
+            interp.eval('error "Hello world." 34 45 56')
+        print(str(context.exception))
+        self.assertTrue('error: Expected 1 or 2 or 3 arguments but received 4.' in str(context.exception))

@@ -24,6 +24,9 @@ class Command():
     def help(self): # pragma: no cover
         return "Base command."
 
+    def syntax(self):
+        return self.name
+
     def __str__(self):
         return f'<Command, {self.name}>'
 
