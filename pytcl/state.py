@@ -1,7 +1,7 @@
 
 
 class Variable():
-    int ref_count = 0
+    ref_count = 0
     type_name = ""
     value = None
 
