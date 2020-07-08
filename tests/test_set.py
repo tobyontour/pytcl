@@ -109,3 +109,11 @@ class TestSetCommand(unittest.TestCase):
             interp.eval('set x')
 
         self.assertTrue('set: Variable "x" does not exist.' in str(context.exception))
+
+    def test_two_sets(self):
+        interp = Interpreter()
+
+        interp.eval('set x "This is the first string"')
+        interp.eval('set x "This is the second string"')
+
+        self.assertEqual(interp.get('x'), 'This is the second string')

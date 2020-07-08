@@ -27,9 +27,12 @@ class Token():
         self.type = type
         self.value = value
 
-    # def __str__(self):
-    #     token_name = Token.token_names[self.type]
-    #     return f"<'{self.value}', {token_name}>"
+    def is_eol(self):
+        return self.value in ['\n', ';']
+
+    def __str__(self):
+        token_name = Token.token_names[self.type]
+        return f"<'{self.value}', {token_name}>"
 
 Tokens = List[Token]
 
@@ -63,9 +66,16 @@ class Tokenizer():
         return c in [' ', '\t', '\r', '\n']
 
     def whitespace(self) -> Token:
-        while self.c in [" "]:
+        nl = False
+        while self.is_whitespace(self.c):
+            if self.c == '\n':
+                nl = True
             self.consume()
-        return Token(Token.WHITESPACE)
+
+        if nl:
+            return Token(Token.WHITESPACE, '\n')
+        else:
+            return Token(Token.WHITESPACE, ' ')
 
     def consume_string(self, delimiter = '"', prefix = '') -> Token:
         escaped = False
@@ -90,13 +100,14 @@ class Tokenizer():
 
     def consume_number(self) -> Token:
         value = ""
-        allowed_characters = ['+', '-', 'e', '.']
+        allowed_characters = ['+', '-', '.']
         while self.c is not None:
             if self.c.isdigit() or self.c in allowed_characters:
                 value += self.c
                 self.consume()
             else:
                 break
+            allowed_characters.append('e')
 
         integer_p = re.compile(r'^[\+\-]?[0-9]+$')
         if integer_p.match(value):
@@ -117,7 +128,7 @@ class Tokenizer():
 
     def get_next_token(self) -> Token:
         while self.c is not None:
-            if self.c == ' ':
+            if self.is_whitespace(self.c):
                 return self.whitespace()
             elif self.c == '"':
                 return self.consume_string('"')

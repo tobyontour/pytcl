@@ -3,6 +3,9 @@
 test:
 	python3 -m unittest discover -s tests
 
+fast:
+	python3 -m unittest discover -s tests -f
+
 coverage: venv
 	venv/bin/coverage run -m unittest discover
 	venv/bin/coverage report -m

@@ -81,3 +81,10 @@ class TestInterp(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             interp.eval('qwerty')
         self.assertTrue("Command \"qwerty\" not found." in str(context.exception))
+
+    def test_two_sets(self):
+        interp = Interpreter()
+
+        interp.eval('set x "This is the first string"\nset x "This is the second string"')
+
+        self.assertEqual(interp.get('x'), 'This is the second string')

@@ -1,7 +1,7 @@
 
 
 class Variable():
-    int ref_count = 0
+    ref_count = 0
     type_name = ""
     value = None
 
@@ -25,14 +25,20 @@ class State():
     stack = []
 
     def __init__(self):
-        stack = [{}]
+        self.stack = [{}]
+
+    def get_current_scope(self):
+        return self.stack[-1]
+
+    def get_globals(self):
+        return self.stack[0]
 
     def init_globals(self):
         stack[0]['argv0'] = ''
         stack[0]['argv'] = ''
         stack[0]['argc'] = ''
         stack[0]['tcl_platform'] = {
-            'engine' = 'pyTcl'
+            'engine': 'pyTcl'
         }
         stack[0]['tcl_interactive'] = 0
         stack[0]['tcl_version'] = 0
